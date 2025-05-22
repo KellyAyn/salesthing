@@ -9,7 +9,7 @@ export default function HomePage() {
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
         <Button className="bg-red-500"
           onClick={handleExcelUpload}>
-          Click me, no balls
+          Upload Excel NOT IMPLEMENTED!!
         </Button>
       </div>
     </main>

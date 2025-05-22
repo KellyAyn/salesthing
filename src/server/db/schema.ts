@@ -19,6 +19,6 @@ export const leads = singlestoreTable("leads", (c) => ({
         .notNull()
         .default("prospect"),
     lastUpdate: c.date()
-        .notNull()
+        .notNull(),
 }))
 
