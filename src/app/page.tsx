@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { leads } from "~/server/db/schema";
 import { drizzle } from "drizzle-orm/singlestore";
-import { handleClick } from "~/utils/populate";
+import { handleClick } from "~/server/utils/populate";
 
 
 export default function HomePage() {
