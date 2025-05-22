@@ -1,12 +1,12 @@
-import { type Config } from "drizzle-kit";
+import { defineConfig } from "drizzle-kit";
 
 import { env } from "~/env";
 
-export default {
-  schema: "./src/server/db/schema.ts",
-  dialect: "mysql",
-  dbCredentials: {
-    url: env.DATABASE_URL,
-  },
-  tablesFilter: ["salesthing_*"],
-} satisfies Config;
+export default defineConfig({
+    dialect: "singlestore",
+    schema: "./src/server/db/schema.ts",
+    dbCredentials: {
+        url: env.DATABASE_URL,
+	ssl: {},
+    },
+});
