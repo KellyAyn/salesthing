@@ -1,9 +1,5 @@
 'use client';
 import Link from "next/link";
-import { leads } from "~/server/db/schema";
-import { drizzle } from "drizzle-orm/singlestore";
-import { handleClick } from "~/server/utils/populate";
-
 
 export default function HomePage() {
   return (
