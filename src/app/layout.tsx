@@ -1,16 +1,12 @@
 import "~/styles/globals.css";
 
 import { type Metadata } from "next";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from '@clerk/nextjs'
+import { ClerkProvider, SignedOut, SignedIn, RedirectToSignIn } from '@clerk/nextjs'
 import { Geist, Geist_Mono } from 'next/font/google'
-
+import { dark } from "@clerk/themes"
+import { SidebarProvider, SidebarInset } from "~/components/ui/sidebar";
+import { AppSidebar } from "~/components/app-sidebar";
+import { cookies } from "next/headers"
 
 export const metadata: Metadata = {
   title: "Salesthing",
@@ -28,25 +24,32 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 })
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+
+  const cookieStore = await cookies()
+  const sidebarState = cookieStore.get("sidebar_state")?.value === "true"
+
   return (
-    <ClerkProvider>
+    <ClerkProvider appearance={{ baseTheme: dark }}>
       <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          <header className="flex justify-end items-center p-4 gap-4 h-16">
-            <SignedOut>
-              <SignInButton />
-              <SignUpButton />
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </header>
-          {children}
+          <SignedIn>
+            <SidebarProvider defaultOpen={sidebarState}>
+              <AppSidebar />
+              <SidebarInset>
+              <main>
+                {children}
+              </main>
+            </SidebarInset>
+          </SidebarProvider>
+          </SignedIn>
+          <SignedOut>
+            <RedirectToSignIn />
+          </SignedOut>
         </body>
       </html>
     </ClerkProvider>

@@ -1,16 +1,28 @@
-'use client';
-import Link from "next/link";
-import { Button } from "~/components/ui/button";
-//import { handleExcelUpload } from "~/server/utils/handleExcelUpload";
+"use server";
 
-export default function HomePage() {
+import { DataTable } from "~/components/ui/data-table";
+import { columns } from "~/components/ui/columns";
+import { db } from "~/server/db";
+import { leads } from "~/server/db/schema";
+
+export default async function Page() {
+  const data = await db.select().from(leads)
+  
+    data.forEach((lead) => {
+      const date = lead.lastUpdate ? new Date(lead.lastUpdate) : null;
+      const formattedDate = date
+        ? date.toLocaleDateString('cze', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })
+        : null;
+      lead.lastUpdate = formattedDate as unknown as Date;
+    });
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <Button className="bg-red-500">
-          Upload Excel NOT IMPLEMENTED!!
-        </Button>
-      </div>
-    </main>
-  );
+    <div className="container mx-auto py-10">
+      <DataTable columns={columns} data={data} />
+    </div>
+  )
 }
