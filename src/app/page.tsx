@@ -1,11 +1,28 @@
-import { UserButton } from "@clerk/nextjs";
-import Link from "next/link";
+"use server";
 
-export default function Home() {
+import { DataTable } from "~/components/ui/data-table";
+import { columns } from "~/components/ui/columns";
+import { db } from "~/server/db";
+import { leads } from "~/server/db/schema";
+
+export default async function Page() {
+  const data = await db.select().from(leads)
+  
+    data.forEach((lead) => {
+      const date = lead.lastUpdate ? new Date(lead.lastUpdate) : null;
+      const formattedDate = date
+        ? date.toLocaleDateString('cze', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })
+        : null;
+      lead.lastUpdate = formattedDate as unknown as Date;
+    });
+
   return (
-    <main className="flex flex-col items-center justify-center h-screen">
-      <Link href="/dashboard">dashboard</Link>
-      <UserButton showName={true} />
-    </main>
+    <div className="container mx-auto py-10">
+      <DataTable columns={columns} data={data} />
+    </div>
   )
 }

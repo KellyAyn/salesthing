@@ -1,4 +1,3 @@
-import { mysqlTableCreator } from "drizzle-orm/mysql-core";
 import { singlestoreTable } from 'drizzle-orm/singlestore-core';
 
 /**
@@ -7,8 +6,6 @@ import { singlestoreTable } from 'drizzle-orm/singlestore-core';
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const createTable = mysqlTableCreator((name) => `salesthing_${name}`);
-
 export const leads = singlestoreTable("leads", (c) => ({
     id: c.int()
         .notNull()
