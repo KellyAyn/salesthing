@@ -1,12 +1,12 @@
 [
   {
     "id": 1,
-    "header": "Cover page",
+    "header": "Sigma",
     "type": "Cover page",
     "status": "In Process",
     "target": "18",
     "limit": "5",
-    "reviewer": "Eddie Lake"
+    "reviewer": "Oliver the Goat"
   },
   {
     "id": 2,
