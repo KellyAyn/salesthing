@@ -1,87 +1,73 @@
-"use client"
-
-import * as React from "react"
 import {
-  IconCamera,
-  IconChartBar,
-  IconDashboard,
-  IconFileAi,
-  IconFileDescription,
-  IconFolder,
-  IconInnerShadowTop,
-  IconListDetails,
-  IconSettings,
-  IconUsers,
-} from "@tabler/icons-react"
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarGroupContent,
+    SidebarGroupLabel,
+    SidebarMenuButton,
+    SidebarMenuItem,
+  } from "~/components/ui/sidebar"
+import { IconChartBar, IconLock, IconSettings, IconUserPlus } from "@tabler/icons-react"
+import Link from "next/link"
+import { UserButton } from "@clerk/nextjs"
 
-import { NavMain } from "~/components/nav-main"
-import { NavUser } from "~/components/nav-user"
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "~/components/ui/sidebar"
-
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/caticon.jpg",
-  },
-  navMain: [
+  const items = [
     {
-      title: "Prospecting",
-      url: "#",
-      icon: IconDashboard,
+        title: "Prospecting",
+        url: "/",
+        icon: <IconUserPlus />
     },
     {
-      title: "Database View",
-      url: "#",
-      icon: IconListDetails,
+        title: "Analytics",
+        url: "/analytics",
+        icon: <IconChartBar />
     },
     {
-      title: "Analytics",
-      url: "#",
-      icon: IconChartBar,
+        title: "Admin Console",
+        url: "/admin",
+        icon: <IconLock />
     },
-  ],
-  navSecondary: [
     {
-      title: "Settings",
-      url: "#",
-      icon: IconSettings,
+        title: "Settings",
+        url: "/settings",
+        icon: <IconSettings />
     },
-  ],
-}
-
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  return (
-    <Sidebar collapsible="offcanvas" {...props}>
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
-            >
-              <a href="/dashboard">
-                <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">Salesthing</span>
-              </a>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarHeader>
-      <SidebarContent className="">
-        <NavMain items={data.navMain} />
-      </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
+  ]
+   
+export function AppSidebar() {
+return (
+    <Sidebar variant="inset" collapsible="offcanvas">
+        <SidebarContent>
+            <SidebarGroup>
+                <SidebarGroupLabel className="text-lg font-semibold flex justify-center py-2">Salesthing</SidebarGroupLabel>
+                <SidebarGroupContent className="flex flex-col gap-2 list-none w-full">
+                    {items.map((item) => (
+                        <SidebarMenuItem key={item.title}>
+                            <SidebarMenuButton asChild>
+                                <Link href={item.url}>
+                                    {item.icon}
+                                    {item.title}
+                                </Link>
+                            </SidebarMenuButton>
+                        </SidebarMenuItem>
+                    ))}
+                </SidebarGroupContent>
+            </SidebarGroup>
+        </SidebarContent>
+        <SidebarFooter>
+            <div className="flex justify-center items-center w-full">
+                <UserButton 
+                showName={true}
+                appearance={{
+                    elements: {
+                        avatarImage: "w-10 h-24",
+                        userButtonPopoverCard: "w-80"
+                    }
+                }}
+                />
+            </div>
+        </SidebarFooter>
     </Sidebar>
-  )
+)
 }
