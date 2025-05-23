@@ -1,38 +1,16 @@
 "use client"
 
-import { SignedIn, SignOutButton, UserButton } from "@clerk/nextjs"
-import { SignedOut } from "@clerk/nextjs"
-import { SignUpButton } from "@clerk/nextjs"
-import { SignInButton } from "@clerk/nextjs"
+import { SignedIn, SignedOut, UserButton, SignInButton } from "@clerk/nextjs"
 
 import {
-  IconDotsVertical,
   IconLogin,
-  IconLogout,
-  IconUserCircle,
 } from "@tabler/icons-react"
 
 import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "~/components/ui/avatar"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu"
-import {
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
 } from "~/components/ui/sidebar"
-import { dark } from "@clerk/themes"
 export function NavUser({
   user,
 }: {
