@@ -16,14 +16,14 @@ export function Navbar() {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center gap-2">
-            <div className="size-8 rounded-md bg-violet-600 flex items-center justify-center m-2.5">
+            <div className="size-8 rounded-md bg-violet-600 flex items-center justify-center ml-3">
               <span className="font-bold text-white">S</span>
             </div>
             <span className="text-lg font-bold">SalesThing</span>
           </Link>
 
           <nav className="hidden md:flex ml-8 gap-6">
-            <Link href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+            <Link href="/upload" className="text-sm font-medium text-muted-foreground hover:text-foreground">
               1
             </Link>
             <Link href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground">
