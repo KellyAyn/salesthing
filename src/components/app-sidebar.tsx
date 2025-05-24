@@ -96,7 +96,7 @@ return (
                 showName={true}
                 appearance={{
                     elements: {
-                        
+                        userButtonOuterIdentifier: 'pr-9',
                     }
                 }}
                 />
