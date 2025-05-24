@@ -32,9 +32,16 @@ export function DataTable<TData, TValue>({
     columns,
     data,
 }: DataTableProps<TData, TValue>) { 
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-        []
-    )
+    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
+    const [browserClass, setBrowserClass] = React.useState("")
+
+    React.useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const browser = Bowser.getParser(window.navigator.userAgent);
+            setBrowserClass(browser.getBrowserName() === "Chrome" ? "px-2" : "");
+        }
+    }, []);
+
     const table = useReactTable({
         data,
         columns,
@@ -46,11 +53,8 @@ export function DataTable<TData, TValue>({
         },
     })
 
-    const browser = Bowser.getParser(window.navigator.userAgent);
-    const isChrome = browser.getBrowserName() === "Chrome" ? "px-2" : "";
-
     return (
-        <div className={`w-full ${isChrome}`}>
+        <div className={`w-full ${browserClass}`}>
             <div className="flex items-center py-2 sticky top-0 z-100 backdrop-blur-sm bg-background/80">
                 {table.getFilteredSelectedRowModel().rows.length > 0 && (
                     <div className="flex items-center gap-2 animate-in fade-in-20 duration-300">
@@ -71,8 +75,8 @@ export function DataTable<TData, TValue>({
                         onChange={(event) => table.getColumn("domain")?.setFilterValue(event.target.value)}
                         className="max-w-sm"
                     />
-                    <Button size="sm" className="">
-                        <Upload className="" />
+                    <Button size="sm">
+                        <Upload className="w-4 h-4" />
                         Upload
                     </Button>
                 </div>
