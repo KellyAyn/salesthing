@@ -96,7 +96,13 @@ return (
                 showName={true}
                 appearance={{
                     elements: {
-                        userButtonOuterIdentifier: 'pr-9',
+                        userButtonBox: {
+                            flexDirection: "row-reverse",
+                        },
+                        userButtonOuterIdentifier: {
+                            "padding-right": "4.2rem",
+                            "margin": "-12px"
+                    }
                     }
                 }}
                 />
