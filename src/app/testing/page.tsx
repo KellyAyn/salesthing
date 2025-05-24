@@ -1,5 +1,5 @@
 export default async function Page() {
 
 
-  return <p>Click one of the links</p>;
+  return <p>otas testing page</p>;
 }
