@@ -75,13 +75,17 @@ export function DataTable<TData, TValue>({
                         onChange={(event) => table.getColumn("domain")?.setFilterValue(event.target.value)}
                         className="max-w-sm"
                     />
-                    <Button size="sm" asChild>
+                    {/* <Button size="sm" asChild>
                         <label htmlFor="file">
                             Upload
                             <Upload className="w-4 h-4" />
                             <Input type="file" id="file" className="hidden" />
                         </label>
-                    </Button>
+                    </Button> 
+                    
+                    THIS IS GOING TO BE A STANDALONE COMPONENT BECAUSE THE LOGIC IS WORTH LIKE 10 ORGASMIC FEELINGS FOR REAL FUCKIGN HELL FUCK ME.
+                    
+                    */}
                 </div>
             </div>
             <div className="rounded-md border">

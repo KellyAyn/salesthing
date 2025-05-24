@@ -4,7 +4,7 @@
 
 - [x] DB connection via Drizzle and singlestore
 - [x] Authentication with clerk
-- [ ] create UI
+- [x] create UI
 - [ ] Handle excel upload
 - [ ] parse excel file
 - [ ] Write excel contents into UI table
