@@ -8,24 +8,30 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
   } from "~/components/ui/sidebar"
-import { IconChartBar, IconLock, IconSettings, IconUserPlus } from "@tabler/icons-react"
+import { IconChartBar, IconLock, IconSettings, IconUserHexagon, IconUserPlus } from "@tabler/icons-react"
 import Link from "next/link"
 import { UserButton } from "@clerk/nextjs"
+import { House } from 'lucide-react';
 
   const items = [
     {
+        title: "Home",
+        url:"/",
+        icon:<House />
+    },
+    {
         title: "Prospecting",
-        url: "/",
+        url: "/prospecting",
         icon: <IconUserPlus />
     },
     {
         title: "Analytics",
-        url: "#",
+        url: "/analytics",
         icon: <IconChartBar />
     },
     {
         title: "Admin Console",
-        url: "#",
+        url: "/admin",
         icon: <IconLock />
     },
     {
