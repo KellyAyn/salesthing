@@ -28,6 +28,11 @@ import { UserButton } from "@clerk/nextjs"
         url: "#",
         icon: <IconLock />
     },
+    {
+        title: "Testing Button",
+        url: "#",
+        icon: <IconLock />
+    }
   ]
    
   const footerItems = [
