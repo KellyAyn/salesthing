@@ -6,7 +6,7 @@ import { Suspense } from "react";
 
 export default async function Page() {
 
-  const data = await db.select().from(leads)
+  const data = await db.select().from(leads).limit(50)
 
   return (
     <div className="container mx-auto py-10">
