@@ -8,7 +8,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
   } from "~/components/ui/sidebar"
-import { IconChartBar, IconLock, IconSettings, IconUserHexagon, IconUserPlus } from "@tabler/icons-react"
+import { IconChartBar, IconLock, IconSettings, IconUserPlus } from "@tabler/icons-react"
 import Link from "next/link"
 import { UserButton } from "@clerk/nextjs"
 import { House } from 'lucide-react';
@@ -83,12 +83,20 @@ return (
                     ))}
                 </SidebarGroupContent>
             <div className="flex justify-center items-center w-full">
-                <UserButton 
+                {/* <UserButton 
                 showName={true}
                 appearance={{
                     elements: {
                         avatarImage: "w-10 h-24",
                         userButtonPopoverCard: "w-80"
+                    }
+                }}
+                /> */}
+                <UserButton 
+                showName={true}
+                appearance={{
+                    elements: {
+                        
                     }
                 }}
                 />
