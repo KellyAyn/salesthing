@@ -1,5 +1,5 @@
 export default async function Page() {
 
 
-  return <p>Click one of the links</p>;
+  return <p className="text-center text-2xl font-bold justify-center items-center">Click one of the links</p>;
 }
