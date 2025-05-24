@@ -5,6 +5,9 @@ import { DropdownMenu, DropdownMenuItem, DropdownMenuContent, DropdownMenuTrigge
 import { Button } from "./button";
 import { Pencil } from "lucide-react";
 import { MoreHorizontal } from "lucide-react";
+import { Archive } from "lucide-react";
+import { DropdownTable } from "../dropdown-table";
+import { Checkbox } from "./checkbox";
 
 export type Lead = {
     id: number;
@@ -15,7 +18,29 @@ export type Lead = {
 
 export const columns: ColumnDef<Lead>[] = [
     {
-        header: () => <div className="text-center">Domain</div>,
+        id: "select",
+        header: ({ table }) => (
+            <Checkbox
+                className="flex items-center justify-center mx-5"
+                checked={
+                    table.getIsAllRowsSelected() ||
+                    (table.getIsSomeRowsSelected() && "indeterminate")
+                }
+                onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                className="flex items-center justify-center mx-5"
+                checked={row.getIsSelected()}
+                onCheckedChange={(value) => row.toggleSelected(!!value)}
+                aria-label="Select row"
+            />
+        )
+    },
+    {
+        header: () => <div className="text-center font-bold">Domain</div>,
         accessorKey: "domain",
         cell: ({ row }) => {
             const domain: string = row.getValue("domain")
@@ -31,16 +56,15 @@ export const columns: ColumnDef<Lead>[] = [
         }
     },
     {
-        header: () => <div className="text-center">Status</div>,
+        header: () => <div className="text-center font-bold">Status</div>,
         accessorKey: "status",
         cell: ({ row }) => {
-            const status: string = row.getValue("status")
-            return <div className="text-center">{status}</div>
+            return <DropdownTable status={row.original.status} />
         }
     },
     {
         accessorKey: "lastUpdate",
-        header: () => <div className="text-center">Last Update</div>,
+        header: () => <div className="text-center font-bold">Last Update</div>,
         cell: ({ row }) => {
             const date: Date = row.getValue("lastUpdate")
             if (!date) {
@@ -68,14 +92,18 @@ export const columns: ColumnDef<Lead>[] = [
                             <MoreHorizontal className="h-4 w-4" />
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent>
+                    <DropdownMenuContent align="center">
                         <DropdownMenuItem>
                             <Pencil className="h-4 w-4" />
                             Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <Archive className="h-4 w-4" />
+                            Archive
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )
         }
-    }
+    },
 ]

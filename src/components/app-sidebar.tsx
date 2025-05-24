@@ -20,21 +20,24 @@ import { UserButton } from "@clerk/nextjs"
     },
     {
         title: "Analytics",
-        url: "/analytics",
+        url: "#",
         icon: <IconChartBar />
     },
     {
         title: "Admin Console",
-        url: "/admin",
+        url: "#",
         icon: <IconLock />
-    },
-    {
-        title: "Settings",
-        url: "/settings",
-        icon: <IconSettings />
     },
   ]
    
+  const footerItems = [
+    {
+        title: "Settings",
+        url: "#",
+        icon: <IconSettings />
+    },
+  ]
+
 export function AppSidebar() {
 return (
     <Sidebar variant="inset" collapsible="offcanvas">
@@ -56,6 +59,18 @@ return (
             </SidebarGroup>
         </SidebarContent>
         <SidebarFooter>
+        <SidebarGroupContent className="flex flex-col gap-2 list-none w-full">
+                    {footerItems.map((item) => (
+                        <SidebarMenuItem key={item.title}>
+                            <SidebarMenuButton asChild>
+                                <Link href={item.url}>
+                                    {item.icon}
+                                    {item.title}
+                                </Link>
+                            </SidebarMenuButton>
+                        </SidebarMenuItem>
+                    ))}
+                </SidebarGroupContent>
             <div className="flex justify-center items-center w-full">
                 <UserButton 
                 showName={true}
