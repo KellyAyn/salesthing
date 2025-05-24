@@ -11,7 +11,7 @@ import { cookies } from "next/headers"
 export const metadata: Metadata = {
   title: "Salesthing",
   description: "A simple sales tool",
-  icons: [{ rel: "icon", url: "/caticon.jpg" }],
+  icons: [{ rel: "icon", url: "/poke.jpg" }],
 };
 
 const geistSans = Geist({
