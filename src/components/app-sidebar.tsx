@@ -30,7 +30,7 @@ import { UserButton } from "@clerk/nextjs"
     },
     {
         title: "Testing Button",
-        url: "#",
+        url: "/testing",
         icon: <IconLock />
     }
   ]
