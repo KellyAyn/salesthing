@@ -75,9 +75,12 @@ export function DataTable<TData, TValue>({
                         onChange={(event) => table.getColumn("domain")?.setFilterValue(event.target.value)}
                         className="max-w-sm"
                     />
-                    <Button size="sm">
-                        <Upload className="w-4 h-4" />
-                        Upload
+                    <Button size="sm" asChild>
+                        <label htmlFor="file">
+                            Upload
+                            <Upload className="w-4 h-4" />
+                            <Input type="file" id="file" className="hidden" />
+                        </label>
                     </Button>
                 </div>
             </div>

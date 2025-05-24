@@ -17,4 +17,5 @@ export const leads = singlestoreTable("leads", (c) => ({
         .default("prospect"),
     lastUpdate: c.date()
         .notNull(),
+    ownerID: c.varchar({ length: 255 }).default("")
 }))
