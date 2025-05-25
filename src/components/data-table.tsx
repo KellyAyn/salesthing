@@ -27,10 +27,10 @@ type DataTableProps<TData, TValue> = {
     data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+const DataTableComponent = <TData, TValue>({
     columns,
     data,
-}: DataTableProps<TData, TValue>) { 
+}: DataTableProps<TData, TValue>) => { 
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
 
     const table = useReactTable({
@@ -119,3 +119,5 @@ export function DataTable<TData, TValue>({
         </div>
     )
 }
+
+export default React.memo(DataTableComponent) as typeof DataTableComponent;

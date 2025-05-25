@@ -9,7 +9,8 @@ import { singlestoreTable } from 'drizzle-orm/singlestore-core';
 export const leads = singlestoreTable("leads", (c) => ({
     id: c.int()
         .notNull()
-        .primaryKey(),
+        .primaryKey()
+        .autoincrement(),
     domain: c.varchar({ length: 255 })
         .notNull(),
     status: c.singlestoreEnum(["trash", "pipedrive", "prospect"])

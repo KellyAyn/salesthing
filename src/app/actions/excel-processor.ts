@@ -21,11 +21,9 @@ export async function processExcel(file: ArrayBuffer) {
     
     const match = await db.select().from(leads).where(inArray(leads.domain, domains));
     const filteredDomains = domains.filter((domain) => !match.some((lead) => lead.domain === domain));
-    console.log(filteredDomains);
     const newProspects = filteredDomains.map((domain) => (
         {
             domain: domain,
-            status: "prospect",
             lastUpdate: new Date(),
             ownerID: userId
         }
@@ -33,7 +31,11 @@ export async function processExcel(file: ArrayBuffer) {
 
     console.log(newProspects);
 
+    if (newProspects.length > 0) {
+        await db.insert(leads).values(newProspects);
+    }
+
     revalidatePath("/prospecting");
 
-    return filteredDomains;
+    return "Successfully processed the excel file.";
 }
