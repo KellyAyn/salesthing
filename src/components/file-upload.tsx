@@ -40,7 +40,10 @@ export function ExcelUploader() {
 
     return (
         <Button size="sm" asChild>
-            <label htmlFor="file">
+            <label 
+                htmlFor="file"
+                className="flex items-center gap-2 text-black"
+            >
                 Upload
                 <Upload className="w-4 h-4" />
                 <Input

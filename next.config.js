@@ -12,7 +12,10 @@ const config = {
     eslint: {
         ignoreDuringBuilds: true,
     },
-    devIndicators: false
+    devIndicators: false,
+    experimental: {
+        reactCompiler: true,
+    }
 };
 
 export default config;

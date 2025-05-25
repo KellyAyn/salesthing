@@ -21,7 +21,7 @@ export const columns: ColumnDef<Lead>[] = [
         id: "select",
         header: ({ table }) => (
             <Checkbox
-                className="flex items-center justify-center mx-5"
+                className="flex items-center justify-center mx-5 text-black"
                 checked={
                     table.getIsAllRowsSelected() ||
                     (table.getIsSomeRowsSelected() && "indeterminate")
@@ -32,7 +32,7 @@ export const columns: ColumnDef<Lead>[] = [
         ),
         cell: ({ row }) => (
             <Checkbox
-                className="flex items-center justify-center mx-5"
+                className="flex items-center justify-center mx-5 text-black"
                 checked={row.getIsSelected()}
                 onCheckedChange={(value) => row.toggleSelected(!!value)}
                 aria-label="Select row"
