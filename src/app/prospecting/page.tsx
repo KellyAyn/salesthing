@@ -6,14 +6,14 @@ import { columns } from "~/components/ui/columns";
 
 export default async function Page() {
 
-    const data = await db.select().from(leads).limit(50)
+  const data = await db.select().from(leads).limit(50)
 
   return (
     <div className="container mx-auto w-full">
       <Suspense
         fallback={<div className="text-center text-2xl font-bold">Loading...</div>}
         >
-        <DataTable columns={columns} data={data} />
+          <DataTable columns={columns} data={data} />
       </Suspense>
     </div>
   )
