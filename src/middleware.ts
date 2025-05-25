@@ -7,7 +7,7 @@ export default clerkMiddleware(async (auth, req) => {
   // Restrict admin routes to users with specific permissions
   if (isProtectedRoute(req)) {
     await auth.protect((has) => {
-      return has({ permission: 'org:admin:' })
+      return has({ permission: 'org:admin' })
     })
   }
 })
