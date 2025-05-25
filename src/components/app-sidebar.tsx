@@ -70,7 +70,7 @@ return (
             </SidebarGroup>
         </SidebarContent>
         <SidebarFooter>
-        <SidebarGroupContent className="flex flex-col gap-2 list-none w-full">
+        <SidebarGroupContent className="flex flex-col gap-2 list-none w-full py-2">
                     {footerItems.map((item) => (
                         <SidebarMenuItem key={item.title}>
                             <SidebarMenuButton asChild>
@@ -98,11 +98,11 @@ return (
                     elements: {
                         userButtonBox: {
                             flexDirection: "row-reverse",
+                            margin: "5px"
                         },
-                        userButtonOuterIdentifier: {
-                            "padding-right": "4.2rem",
-                            "margin": "-12px"
-                    }
+                        userButtonOuterIdentifier: 'pr-2',
+                        rootBox: "rounded-sm outline-[#0a0a0a] border-solid outline-5 bg-[#0a0a0a]",
+                        
                     }
                 }}
                 />

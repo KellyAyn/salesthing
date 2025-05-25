@@ -12,6 +12,7 @@ const config = {
     eslint: {
         ignoreDuringBuilds: true,
     },
+    devIndicators: false
 };
 
 export default config;
