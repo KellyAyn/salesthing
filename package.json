@@ -44,6 +44,7 @@
     "@t3-oss/env-nextjs": "^0.12.0",
     "@tabler/icons-react": "^3.33.0",
     "@tanstack/react-table": "^8.21.3",
+    "@tanstack/react-virtual": "^3.13.9",
     "babel-plugin-react-compiler": "19.1.0-rc.2",
     "bowser": "^2.11.0",
     "class-variance-authority": "^0.7.1",

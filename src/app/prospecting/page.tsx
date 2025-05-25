@@ -1,6 +1,6 @@
 import { db } from "~/server/db";
 import { leads } from "~/server/db/schema";
-import { Suspense, useMemo } from "react";
+import { Suspense } from "react";
 import { columns } from "~/components/ui/columns";
 import { and, eq, lt, or } from "drizzle-orm";
 import { auth } from "@clerk/nextjs/server";
