@@ -20,9 +20,8 @@ import React from "react";
   } from "~/components/ui/table"
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { Upload, Archive } from "lucide-react";
-import Bowser from "bowser";
-
+import { Archive } from "lucide-react";
+import { ExcelUploader } from "./file-upload";
 type DataTableProps<TData, TValue> = {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
@@ -33,14 +32,6 @@ export function DataTable<TData, TValue>({
     data,
 }: DataTableProps<TData, TValue>) { 
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
-    const [browserClass, setBrowserClass] = React.useState("")
-
-    React.useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const browser = Bowser.getParser(window.navigator.userAgent);
-            setBrowserClass(browser.getBrowserName() === "Chrome" ? "px-2" : "");
-        }
-    }, []);
 
     const table = useReactTable({
         data,
@@ -54,7 +45,7 @@ export function DataTable<TData, TValue>({
     })
 
     return (
-        <div className={`w-full ${browserClass}`}>
+        <div className="w-full px-2">
             <div className="flex items-center py-2 sticky top-0 z-100 backdrop-blur-sm bg-background/80">
                 {table.getFilteredSelectedRowModel().rows.length > 0 && (
                     <div className="flex items-center gap-2 animate-in fade-in-20 duration-300">
@@ -75,17 +66,7 @@ export function DataTable<TData, TValue>({
                         onChange={(event) => table.getColumn("domain")?.setFilterValue(event.target.value)}
                         className="max-w-sm"
                     />
-                    {/* <Button size="sm" asChild>
-                        <label htmlFor="file">
-                            Upload
-                            <Upload className="w-4 h-4" />
-                            <Input type="file" id="file" className="hidden" />
-                        </label>
-                    </Button> 
-                    
-                    THIS IS GOING TO BE A STANDALONE COMPONENT BECAUSE THE LOGIC IS WORTH LIKE 10 ORGASMIC FEELINGS FOR REAL FUCKIGN HELL FUCK ME.
-                    
-                    */}
+                    <ExcelUploader />
                 </div>
             </div>
             <div className="rounded-md border">

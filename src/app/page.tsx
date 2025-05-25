@@ -1,6 +1,14 @@
+import { Alert, AlertTitle } from "~/components/ui/alert";
+
 export default async function Page() {
 
-
-    return <p className="text-center text-2xl font-bold justify-center items-center">Click one of the links</p>;
-
+    return (
+      <div className="flex flex-col items-center justify-center h-screen w-full text-center">
+        <Alert>
+            <AlertTitle>
+                Navigate bitch
+            </AlertTitle>
+        </Alert>
+      </div>
+    )
 }

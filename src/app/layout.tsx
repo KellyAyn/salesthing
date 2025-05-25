@@ -7,7 +7,7 @@ import { dark } from "@clerk/themes"
 import { SidebarProvider, SidebarInset } from "~/components/ui/sidebar";
 import { AppSidebar } from "~/components/app-sidebar";
 import { cookies } from "next/headers"
-
+import { Toaster } from "~/components/ui/sonner"
 export const metadata: Metadata = {
   title: "Salesthing",
   description: "A simple sales tool",
@@ -43,6 +43,7 @@ export default async function RootLayout({
               <SidebarInset>
               <main>
                 {children}
+                <Toaster />
               </main>
             </SidebarInset>
           </SidebarProvider>
