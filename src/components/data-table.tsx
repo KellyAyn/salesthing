@@ -20,17 +20,22 @@ import {
   TableRow,
 } from '~/components/ui/table';
 import { DataTableHeader } from '~/components/ui/data-table-header';
+import type { Lead } from './ui/columns';
 
-type DataTableProps<TData, TValue> = {
+interface DataTableProps<TData extends Lead, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   onDataChange?: (newData: TData[]) => void;
-};
+  meta?: {
+    getRowClassName?: (row: TData) => string;
+  };
+}
 
-const DataTableComponent = <TData, TValue>({
+const DataTableComponent = <TData extends Lead, TValue>({
   columns,
   data,
   onDataChange,
+  meta,
 }: DataTableProps<TData, TValue>) => {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -53,6 +58,7 @@ const DataTableComponent = <TData, TValue>({
     },
     meta: {
       onDataChange,
+      getRowClassName: meta?.getRowClassName,
     },
   });
 
@@ -82,22 +88,26 @@ const DataTableComponent = <TData, TValue>({
             </TableHeader>
             <TableBody>
               {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && 'selected'}
-                    className='animate-in fade-in-40 duration-800 ease-out'
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
+                table.getRowModel().rows.map((row) => {
+                  const rowClassName =
+                    table.options.meta?.getRowClassName?.(row.original) ?? '';
+                  return (
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && 'selected'}
+                      className={`animate-in fade-in-40 duration-800 ease-out ${rowClassName}`}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  );
+                })
               ) : (
                 <TableRow>
                   <TableCell colSpan={columns.length} className='text-center'>

@@ -1,15 +1,17 @@
+import { columns } from '~/components/ui/columns';
+import { DataTableWrapper } from '~/components/data-table-wrapper';
 import { db } from '~/server/db';
 import { leads } from '~/server/db/schema';
-import { Suspense } from 'react';
-import { columns } from '~/components/ui/columns';
 import { and, eq, lt, or } from 'drizzle-orm';
 import { auth } from '@clerk/nextjs/server';
-import { DataTableWrapper } from '~/components/data-table-wrapper';
+import { Suspense } from 'react';
+import { TableSkeleton } from '~/components/table-skeleton';
 
-export default async function Page() {
+export default async function ProspectingPage() {
   const { userId } = await auth();
   const sixMonthsAgo = new Date();
   sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+
   const data = await db
     .select()
     .from(leads)
@@ -21,15 +23,9 @@ export default async function Page() {
     );
 
   return (
-    <div className='container mx-auto w-full'>
-      <Suspense
-        fallback={
-          <div className='items-center justify-center text-center text-2xl font-bold'>
-            Loading...
-          </div>
-        }
-      >
-        <DataTableWrapper columns={columns} initialData={data} />
+    <div className='container mx-auto p-4'>
+      <Suspense fallback={<TableSkeleton />}>
+        <DataTableWrapper columns={columns} data={data} />
       </Suspense>
     </div>
   );

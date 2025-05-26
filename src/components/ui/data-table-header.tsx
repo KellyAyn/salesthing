@@ -50,13 +50,6 @@ export function DataTableHeader<TData>({ table }: DataTableHeaderProps<TData>) {
       <div className='flex items-center gap-2'>
         {table.getFilteredSelectedRowModel().rows.length > 0 && (
           <div className='animate-in fade-in-0 flex items-center gap-2 duration-500'>
-            <div className='text-muted-foreground flex px-2 text-sm'>
-              {table.getFilteredSelectedRowModel().rows.length} {''}
-              {table.getFilteredSelectedRowModel().rows.length == 1
-                ? 'row'
-                : 'rows'}{' '}
-              selected
-            </div>
             <Button
               size='sm'
               variant='ghost'
@@ -64,8 +57,15 @@ export function DataTableHeader<TData>({ table }: DataTableHeaderProps<TData>) {
               onClick={() => handleArchiveLeads(table)}
             >
               <Archive className='h-4 w-4' />
-              Archive
+              Archive selected
             </Button>
+            <div className='text-muted-foreground flex px-2 text-sm'>
+              {table.getFilteredSelectedRowModel().rows.length} {''}
+              {table.getFilteredSelectedRowModel().rows.length == 1
+                ? 'row'
+                : 'rows'}{' '}
+              selected
+            </div>
           </div>
         )}
       </div>

@@ -16,7 +16,7 @@ export default async function Page() {
             asChild
             variant='secondary'
             size='lg'
-            className='h-16 w-full text-xl font-semibold'
+            className='h-16 w-full text-xl font-semibold transition-all duration-300 hover:scale-105'
           >
             <Link href='/prospecting' prefetch={true}>
               Start Prospecting
@@ -25,19 +25,19 @@ export default async function Page() {
 
           <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
             <Button
-              asChild
               variant='outline'
               className='h-12 text-base font-medium'
+              disabled
             >
-              <Link href='/analytics'>Analytics</Link>
+              Analytics
             </Button>
 
             <Button
-              asChild
               variant='outline'
               className='h-12 text-base font-medium'
+              disabled
             >
-              <Link href='/settings'>Settings</Link>
+              Settings
             </Button>
           </div>
         </div>

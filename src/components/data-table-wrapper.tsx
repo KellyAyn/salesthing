@@ -1,22 +1,40 @@
 'use client';
 
-import { type Lead } from './ui/columns';
-import DataTable from './data-table';
 import { type ColumnDef } from '@tanstack/react-table';
+import DataTable from './data-table';
+import type { Lead } from './ui/columns';
 import { useState } from 'react';
 
-interface DataTableWrapperProps<TData, TValue> {
+type DataTableWrapperProps<TData extends Lead, TValue> = {
   columns: ColumnDef<TData, TValue>[];
-  initialData: TData[];
-}
+  data: TData[];
+};
 
-export function DataTableWrapper<TData, TValue>({
+const getStatusColor = (status: Lead['status']) => {
+  switch (status) {
+    case 'trash':
+      return 'bg-red-950/50';
+    case 'pipedrive':
+      return 'bg-green-950/50';
+    default:
+      return '';
+  }
+};
+
+export function DataTableWrapper<TData extends Lead, TValue>({
   columns,
-  initialData,
+  data: initialData,
 }: DataTableWrapperProps<TData, TValue>) {
-  const [tableData, setTableData] = useState<TData[]>(initialData);
+  const [data, setData] = useState<TData[]>(initialData);
 
   return (
-    <DataTable columns={columns} data={tableData} onDataChange={setTableData} />
+    <DataTable
+      columns={columns}
+      data={data}
+      onDataChange={setData}
+      meta={{
+        getRowClassName: (row: TData) => getStatusColor(row.status),
+      }}
+    />
   );
 }
