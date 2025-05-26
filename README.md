@@ -14,8 +14,9 @@ reps, thus reducing the total number of domains that the rep needs to process,
 since they now only see domains that have not yet been touched by any of the
 other reps at the company.
 
-A great thanks goes to my good friend Ota for helping me figure all of this out.
-Whether it be complex data structures, or just the good old emotional support.
+A great thanks goes to my good friend [Ota](https://github.com/otatormeps) for
+helping me figure all of this out. Whether it be complex data structures, or
+just the good old emotional support.
 
 ## Todo
 
