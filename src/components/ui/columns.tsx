@@ -1,16 +1,66 @@
 'use client';
 
-import type { ColumnDef } from '@tanstack/react-table';
+import type { ColumnDef, Table } from '@tanstack/react-table';
 import { Button } from './button';
 import { Pencil, Archive } from 'lucide-react';
 import { DropdownTable } from '../dropdown-table';
 import { Checkbox } from './checkbox';
+import { archiveLead } from '~/app/actions/archive';
+import { toast } from 'sonner';
+import { changeStatus } from '~/app/actions/change-status';
+
+// Extend the TableMeta type to include our custom properties
+declare module '@tanstack/react-table' {
+  interface TableMeta<TData> {
+    onDataChange?: (newData: TData[]) => void;
+  }
+}
 
 export type Lead = {
   id: number;
   domain: string;
   status: 'trash' | 'pipedrive' | 'prospect';
   lastUpdate: Date;
+  archived: boolean;
+};
+
+const handleArchiveLead = async (id: number, table: Table<Lead>) => {
+  const result = await archiveLead(id);
+  if (result === 1) {
+    const currentData = table.options.data;
+    const newData = currentData.filter((row) => row.id !== id);
+
+    table.options.meta?.onDataChange?.(newData);
+
+    toast.success('Lead archived successfully', {
+      icon: '👍',
+      duration: 2000,
+      richColors: true,
+    });
+  } else {
+    toast.error(`Failed to archive lead: ${String(result)}`, {
+      icon: '🤦‍♂️',
+      duration: 5000,
+      richColors: true,
+    });
+  }
+};
+
+const pushStatusChange = async (status: string, id: number) => {
+  const result = await changeStatus(status, id);
+  if (result === 1) {
+    toast.success('Status changed successfully', {
+      icon: '👍',
+      duration: 2000,
+      richColors: true,
+    });
+  } else {
+    toast.error('Failed to change status', {
+      icon: '🤦‍♂️',
+      duration: 5000,
+      richColors: true,
+    });
+  }
 };
 
 export const columns: ColumnDef<Lead>[] = [
@@ -71,10 +121,24 @@ export const columns: ColumnDef<Lead>[] = [
       <div className='min-w-[8rem] text-center font-bold'>Status</div>
     ),
     accessorKey: 'status',
-    cell: ({ row }) => {
+    cell: ({ row, table }) => {
+      const handleStatusChange = (newStatus: string) => {
+        const currentData = table.options.data;
+        const newData = currentData.map((item) =>
+          item.id === row.original.id
+            ? { ...item, status: newStatus as Lead['status'] }
+            : item,
+        );
+        table.options.meta?.onDataChange?.(newData);
+        void pushStatusChange(newStatus, row.original.id);
+      };
+
       return (
         <div className='flex min-w-[8rem] justify-center'>
-          <DropdownTable status={row.original.status} />
+          <DropdownTable
+            status={row.original.status}
+            onStatusChange={handleStatusChange}
+          />
         </div>
       );
     },
@@ -105,14 +169,18 @@ export const columns: ColumnDef<Lead>[] = [
     header: () => (
       <div className='min-w-[7rem] text-center font-bold'>Actions</div>
     ),
-    cell: ({ row }) => {
+    cell: ({ row, table }) => {
       return (
         <div className='flex min-w-[7rem] justify-center gap-2'>
-          <Button variant='ghost' className='h-8 w-8 p-0'>
+          <Button variant='outline' disabled className='h-8 w-8 p-0'>
             <Pencil className='h-4 w-4' />
             <span className='sr-only'>Edit</span>
           </Button>
-          <Button variant='ghost' className='h-8 w-8 p-0'>
+          <Button
+            variant='ghost'
+            className='h-8 w-8 p-0'
+            onClick={() => handleArchiveLead(row.original.id, table)}
+          >
             <Archive className='h-4 w-4' />
             <span className='sr-only'>Archive</span>
           </Button>
