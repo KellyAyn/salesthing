@@ -1,6 +1,5 @@
 'use server';
 
-import type { Table } from '@tanstack/react-table';
 import { eq } from 'drizzle-orm';
 import type { Lead } from '~/components/ui/columns';
 import { db } from '~/server/db';

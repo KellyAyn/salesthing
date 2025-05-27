@@ -140,17 +140,22 @@ export const columns: ColumnDef<Lead>[] = [
     accessorKey: 'lastUpdate',
     header: () => <div className='w-40 text-center font-bold'>Last Update</div>,
     cell: ({ row }) => {
-      const date: Date = row.getValue('lastUpdate');
-      if (!date) {
+      const date = row.getValue('lastUpdate');
+      if (!date || !(date instanceof Date) || isNaN(date.getTime())) {
         return <div className='w-40 text-center'>N/A</div>;
       }
-      const formattedDate = new Intl.DateTimeFormat('cze', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }).format(date);
+      try {
+        const formattedDate = new Intl.DateTimeFormat('cze', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        }).format(date);
 
-      return <div className='w-40 text-center'>{formattedDate}</div>;
+        return <div className='w-40 text-center'>{formattedDate}</div>;
+      } catch (e) {
+        console.error('Failed to format date:', e);
+        return <div className='w-40 text-center'>Invalid Date</div>;
+      }
     },
     size: 160,
   },
