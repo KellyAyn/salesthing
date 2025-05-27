@@ -23,7 +23,7 @@ export default async function ProspectingPage() {
     );
 
   return (
-    <div className='container mx-auto p-4'>
+    <div className='container mx-auto p-3.5'>
       <Suspense fallback={<TableSkeleton />}>
         <DataTableWrapper columns={columns} data={data} />
       </Suspense>
