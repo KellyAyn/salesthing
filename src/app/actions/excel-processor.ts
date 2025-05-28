@@ -21,17 +21,14 @@ export async function processExcel(file: ArrayBuffer) {
     .map((row) => row[0])
     .filter((domain): domain is string => domain !== undefined);
 
-  const regex = /^(?!.*\.$)(?!\..*$).*\..*$/;
-  const validatedDomains = domains.filter((domain) => regex.test(domain));
-
   const match = await db
     .select()
     .from(leads)
-    .where(inArray(leads.domain, validatedDomains));
-  const filteredDomains = validatedDomains.filter(
-    (domain) => !match.some((lead) => lead.domain === domain),
+    .where(inArray(leads.domain, domains));
+  const filteredDomains = domains.filter(
+    (domain: string) => !match.some((lead) => lead.domain === domain),
   );
-  const newProspects = filteredDomains.map((domain) => ({
+  const newProspects = filteredDomains.map((domain: string) => ({
     domain: domain,
     lastUpdate: new Date(),
     ownerID: userId,
