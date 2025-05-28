@@ -4,7 +4,7 @@ import { db } from '~/server/db';
 import { leads } from '~/server/db/schema';
 import type { Lead } from '~/components/ui/columns';
 import { auth } from '@clerk/nextjs/server';
-import { eq, desc, lt, or, and, asc } from 'drizzle-orm';
+import { eq, lt, or, and, asc } from 'drizzle-orm';
 
 export async function getLeads(): Promise<Lead[]> {
   try {
@@ -25,7 +25,7 @@ export async function getLeads(): Promise<Lead[]> {
           or(eq(leads.archived, false), lt(leads.lastUpdate, sixMonthsAgo)),
         ),
       )
-      .orderBy(asc(leads.status));
+      .orderBy(asc(leads.status), asc(leads.domain));
 
     return leadsData;
   } catch (error) {

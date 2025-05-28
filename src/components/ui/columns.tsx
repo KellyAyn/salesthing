@@ -57,8 +57,17 @@ export const columns: ColumnDef<Lead>[] = [
             table.getIsAllRowsSelected() ||
             (table.getIsSomeRowsSelected() && 'indeterminate')
           }
-          onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
-          aria-label='Select all'
+          onCheckedChange={(value) => {
+            table.toggleAllRowsSelected(false);
+            if (value) {
+              table.getRowModel().rows.forEach((row) => {
+                if (row.original.status !== 'prospect') {
+                  row.toggleSelected(true);
+                }
+              });
+            }
+          }}
+          aria-label='Select non-prospects'
         />
       </div>
     ),
