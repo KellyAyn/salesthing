@@ -25,16 +25,20 @@ export async function processExcel(file: ArrayBuffer) {
     .select()
     .from(leads)
     .where(inArray(leads.domain, domains));
+
   const filteredDomains = domains.filter(
-    (domain: string) => !match.some((lead) => lead.domain === domain),
+    (domain) => !match.some((lead) => lead.domain === domain),
   );
+
   const newProspects = filteredDomains.map((domain: string) => ({
     domain: domain,
     lastUpdate: new Date(),
     ownerID: userId,
   }));
 
-  console.log(newProspects);
+  console.log(domains);
+  console.log(match);
+  console.log(filteredDomains);
 
   if (newProspects.length > 0) {
     await db.insert(leads).values(newProspects);
