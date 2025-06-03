@@ -2,11 +2,13 @@ import { defineConfig } from 'drizzle-kit';
 
 import { env } from '~/env';
 
+const dbUrl = env.NODE_ENV === 'production' ? env.DB_PROD_URL : env.DB_DEV_URL;
+
 export default defineConfig({
-  dialect: 'singlestore',
+  dialect: 'turso',
   schema: './src/server/db/schema.ts',
   dbCredentials: {
-    url: env.DATABASE_URL,
-    ssl: {},
+    url: dbUrl,
+    authToken: env.TURSO_TOKEN,
   },
 });

@@ -1,23 +1,18 @@
-import { drizzle } from 'drizzle-orm/singlestore';
-import { createPool, type Pool } from 'mysql2/promise';
+import { drizzle } from 'drizzle-orm/libsql';
+import { createClient } from '@libsql/client/web';
 
 import { env } from '~/env';
-import * as schema from './schema';
 
-/**
- * Cache the database connection in development. This avoids creating a new connection on every HMR
- * update.
- */
-const globalForDb = globalThis as unknown as {
-  conn: Pool | undefined;
-};
+const devClient = createClient({
+  url: env.DB_DEV_URL,
+  authToken: env.TURSO_TOKEN,
+});
 
-const conn = globalForDb.conn ?? createPool({ uri: env.DATABASE_URL });
-if (env.NODE_ENV !== 'production') globalForDb.conn = conn;
+const prodClient = createClient({
+  url: env.DB_PROD_URL,
+  authToken: env.TURSO_TOKEN,
+});
 
-// Use different schemas based on environment
-const dbSchema = {
-  leads: env.NODE_ENV === 'production' ? schema.leadsProd : schema.leadsDev,
-};
+const client = env.NODE_ENV === 'production' ? prodClient : devClient;
 
-export const db = drizzle(conn, { schema: dbSchema });
+export const db = drizzle(client);

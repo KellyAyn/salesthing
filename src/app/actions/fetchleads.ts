@@ -26,7 +26,7 @@ export async function getLeads(): Promise<Lead[]> {
         ),
       )
       .orderBy(asc(leads.status), asc(leads.domain));
-
+    console.log(leadsData);
     return leadsData;
   } catch (error) {
     console.error('Error fetching leads:', error);

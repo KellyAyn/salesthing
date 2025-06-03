@@ -1,14 +1,22 @@
-import { checkRole } from 'utils/roles'
-import { redirect } from 'next/navigation'
-
+import { checkRole } from 'utils/roles';
+import { redirect } from 'next/navigation';
+import { Button } from '~/components/ui/button';
+import { downloadDb } from '../actions/downloadDb';
+import { pushToDB } from '../actions/pushtoDB';
 export default async function AdminDashboard() {
-  // Protect the page from users who are not admins
-  
-  const isAdmin = await checkRole('admin')
+  const isAdmin = await checkRole('admin');
   if (!isAdmin) {
-    redirect('/')
+    redirect('/');
   }
-  
-return <p className="text-center text-2xl font-bold justify-center items-center">you are a sussy baka</p>;
-}
 
+  return (
+    <p className='items-center justify-center py-14 text-center text-2xl font-bold'>
+      <Button onClick={downloadDb} variant='ghost'>
+        Download DB
+      </Button>
+      <Button onClick={pushToDB} variant='ghost'>
+        Push DB
+      </Button>
+    </p>
+  );
+}

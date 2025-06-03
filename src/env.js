@@ -8,8 +8,10 @@ export const env = createEnv({
    */
   server: {
     CLERK_SECRET_KEY: z.string(),
-    DATABASE_URL: z.string().url(),
     NODE_ENV: z.enum(['development', 'production']).default('development'),
+    DB_DEV_URL: z.string().url(),
+    DB_PROD_URL: z.string().url(),
+    TURSO_TOKEN: z.string(),
   },
 
   /**
@@ -26,9 +28,11 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
-    DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
+    DB_DEV_URL: process.env.DB_DEV_URL,
+    DB_PROD_URL: process.env.DB_PROD_URL,
+    TURSO_TOKEN: process.env.TURSO_TOKEN,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
