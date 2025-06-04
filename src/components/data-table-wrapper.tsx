@@ -27,7 +27,6 @@ export function DataTableWrapper<TData extends Lead, TValue>({
   data: initialData,
 }: DataTableWrapperProps<TData, TValue>) {
   const [data, setData] = useState<TData[]>(() => {
-    // Convert initial data dates if they're strings
     return initialData.map((item) => ({
       ...item,
       lastUpdate:
@@ -37,14 +36,11 @@ export function DataTableWrapper<TData extends Lead, TValue>({
     }));
   });
 
-  // Fetch data from DB and update localStorage
   useEffect(() => {
     const fetchAndUpdateData = async () => {
       try {
-        // Fetch fresh data using server action
         const freshData = (await getLeads()) as TData[];
 
-        // Convert dates in the fresh data
         const processedData = freshData.map((item) => ({
           ...item,
           lastUpdate:
@@ -53,16 +49,13 @@ export function DataTableWrapper<TData extends Lead, TValue>({
               : new Date(item.lastUpdate),
         }));
 
-        // Update state with fresh data
         setData(processedData);
 
-        // Update localStorage with fresh data
         if (typeof window !== 'undefined') {
           localStorage.setItem('tableData', JSON.stringify(processedData));
         }
       } catch (error) {
         console.error('Error fetching data:', error);
-        // If fetch fails, try to use localStorage as fallback
         if (typeof window !== 'undefined') {
           const persistedData = localStorage.getItem('tableData');
           if (persistedData) {
@@ -88,9 +81,7 @@ export function DataTableWrapper<TData extends Lead, TValue>({
     };
 
     void fetchAndUpdateData();
-  }, []); // Empty dependency array means this runs once on mount
-
-  // Update localStorage when data changes (except during initial fetch)
+  }, []);
   useEffect(() => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('tableData', JSON.stringify(data));
