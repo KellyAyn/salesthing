@@ -14,9 +14,9 @@ interface DataTableWrapperProps<TData extends Lead, TValue> {
 const getStatusColor = (status: Lead['status']) => {
   switch (status) {
     case 'trash':
-      return 'bg-red-600/50';
+      return 'bg-rose-800/50';
     case 'pipedrive':
-      return 'bg-green-600/50';
+      return 'bg-lime-800/50';
     default:
       return '';
   }
