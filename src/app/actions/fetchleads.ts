@@ -21,7 +21,7 @@ export async function getLeads(): Promise<Lead[]> {
       .from(leads)
       .where(
         and(
-          eq(leads.ownerID, userId ?? ''),
+          eq(leads.ownerID, userId),
           or(eq(leads.archived, false), lt(leads.lastUpdate, sixMonthsAgo)),
         ),
       )

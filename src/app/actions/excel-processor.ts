@@ -27,7 +27,8 @@ export async function processExcel(file: ArrayBuffer) {
     .where(inArray(leads.domain, domains));
 
   const filteredDomains = domains.filter(
-    (domain) => !match.some((lead) => lead.domain === domain),
+    (domain) =>
+      !match.some((lead) => lead.domain === domain && lead.ownerID !== ''),
   );
 
   const newProspects = filteredDomains.map((domain: string) => ({
